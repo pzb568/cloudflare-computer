@@ -7,11 +7,6 @@ import {
   WorkerShellBackend,
 } from "@cloudflare/computer/backends/worker-shell";
 
-export interface Env {
-  Agent: DurableObjectNamespace<Agent>;
-  LOADER: WorkerLoader;
-}
-
 export class Agent extends withWorkspace(
   class extends DurableObject<Env> {},
   (self) => ({
