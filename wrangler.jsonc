@@ -1,0 +1,33 @@
+{
+  "name": "cloudflare-computer-test",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-12",
+  "compatibility_flags": [
+    "nodejs_compat",
+    "experimental"
+  ],
+
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "Agent",
+        "class_name": "Agent"
+      }
+    ]
+  },
+
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": [
+        "Agent"
+      ]
+    }
+  ],
+
+  "worker_loaders": [
+    {
+      "binding": "LOADER"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+name: Check Cloudflare Computer
+
+on:
+  push:
+    branches:
+      - main
+      - master
+      - '**'
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate Worker types
+        run: npx wrangler types
+
+      - name: TypeScript check
+        run: npx tsc --noEmit

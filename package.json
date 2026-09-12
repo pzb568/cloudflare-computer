@@ -1,0 +1,16 @@
+{
+  "name": "cloudflare-computer",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "deploy": "wrangler deploy"
+  },
+  "dependencies": {
+    "@cloudflare/computer": "^0.3.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.2",
+    "wrangler": "^4.131.1"
+  }
+}
