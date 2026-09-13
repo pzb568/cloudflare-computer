@@ -2,6 +2,7 @@ import { DurableObject } from "cloudflare:workers";
 import {
   withWorkspace,
   getWorkspace,
+  type DurableObjectStorageLike,
 } from "@cloudflare/computer";
 import {
   WorkerShellBackend,
@@ -16,7 +17,7 @@ export class Agent extends withWorkspace(
     };
 
     return {
-      storage: ctx.storage,
+      storage: ctx.storage as unknown as DurableObjectStorageLike,
       backends: [
         new WorkerShellBackend({
           loader: env.LOADER,
