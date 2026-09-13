@@ -9,19 +9,26 @@ import {
 
 export class Agent extends withWorkspace(
   class extends DurableObject<Env> {},
-  (self) => ({
-    storage: self.ctx.storage,
-    backends: [
-      new WorkerShellBackend({
-        loader: self.env.LOADER,
-        workspace: {
-          binding: "Agent",
-          id: self.ctx.id.toString(),
-        },
-        ctx: self.ctx,
-      }),
-    ],
-  }),
+  (self) => {
+    const { ctx, env } = self as unknown as {
+      ctx: DurableObjectState;
+      env: Env;
+    };
+
+    return {
+      storage: ctx.storage,
+      backends: [
+        new WorkerShellBackend({
+          loader: env.LOADER,
+          workspace: {
+            binding: "Agent",
+            id: ctx.id.toString(),
+          },
+          ctx,
+        }),
+      ],
+    };
+  },
 ) {}
 
 export default {
@@ -34,7 +41,9 @@ export default {
     const id = env.Agent.idFromName("demo");
     const agent = env.Agent.get(id);
 
-    using ws = await getWorkspace(agent);
+    using ws = await getWorkspace(
+      agent as unknown as Parameters<typeof getWorkspace>[0],
+    );
 
     // GET /
     if (request.method === "GET" && url.pathname === "/") {
